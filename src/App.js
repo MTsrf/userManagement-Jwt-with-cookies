@@ -1,24 +1,40 @@
-import logo from './logo.svg';
+import { Routes, Route, Navigate } from 'react-router-dom'
 import './App.css';
+import Home from '../src/Pages/User/Home'
+import LoginPage from '../src/Pages/User/LoginPage'
+import SignupPage from '../src/Pages/User/SignupPage'
+import AdminRoute from './Pages/AdminRoute';
+import Errror from './component/404/Errror';
+import { AuthContext } from './context/AuthContext'
+import { useContext, useEffect } from 'react';
+
 
 function App() {
+  const ProtectedRoute = ({ children }) => {
+    const { user } = useContext(AuthContext);
+
+    if (user) {
+      return <Navigate to="/" />;
+    }
+
+    return children;
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path='/login' element={
+        <ProtectedRoute>
+          <LoginPage />
+        </ProtectedRoute>
+      } />
+      <Route path='/signup' element={
+        <ProtectedRoute>
+          <SignupPage />
+        </ProtectedRoute>
+      } />
+      <Route path='/admin/*' element={<AdminRoute />} />
+      <Route path='/*' element={<Errror />} />
+    </Routes>
   );
 }
 
