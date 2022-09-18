@@ -39,7 +39,7 @@ const Login = () => {
     const onSubmit =async (data) => {
         dispatch({ type: "LOGIN_START" });
         try {
-            let res = await axiosInstance.post("/admin/adminLogin",data,{ withCredentials:true})
+            let res = await axiosInstance.post("/admin/adminLogin",data,{ withCredentials:false})
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
             if (res.data.created) {
                 navigate('/admin/home')

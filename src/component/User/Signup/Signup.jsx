@@ -44,7 +44,7 @@ const Signup = () => {
     const onSubmit = async (data) => {
         dispatch({ type: "LOGIN_START" });
         try {
-            let res = await axiosInstance.post("/user/signup", data, { withCredentials: true })
+            let res = await axiosInstance.post("/user/signup", data, { withCredentials: false })
             console.log(res.data.details);
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
             if (res.data.err) {
