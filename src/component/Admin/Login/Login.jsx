@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
 import { AdminAuthContext } from '../../../context/AdminAuthContext'
-import axios from 'axios'
+import { axiosInstance } from '../../../config';
 
 function Copyright(props) {
     return (
@@ -39,7 +39,7 @@ const Login = () => {
     const onSubmit =async (data) => {
         dispatch({ type: "LOGIN_START" });
         try {
-            let res = await axios.post("https://employeemanagementjwt.herokuapp.com//admin/adminLogin",data,{ withCredentials:true})
+            let res = await axiosInstance.post("/admin/adminLogin",data,{ withCredentials:true})
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
             if (res.data.created) {
                 navigate('/admin/home')

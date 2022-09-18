@@ -14,10 +14,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useForm } from 'react-hook-form'
-import axios from 'axios';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext.js'
+import { axiosInstance } from '../../../config.js';
 
 function Copyright(props) {
     return (
@@ -40,7 +40,7 @@ const Login = () => {
     const onSubmit = async (data) => {
         dispatch({ type: "LOGIN_START" });
         try {
-            let res = await axios.post("https://employeemanagementjwt.herokuapp.com/user/login", data,{ withCredentials: false })
+            let res = await axiosInstance.post("/user/login", data,{ withCredentials: false })
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
             console.log(res.data);
             if (res.data.created) {

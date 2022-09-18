@@ -19,8 +19,7 @@ import Search from '@mui/icons-material/Search';
 import ViewColumn from '@mui/icons-material/ViewColumn';
 import Alert from '@mui/material/Alert'
 import MaterialTable from "@material-table/core";
-
-import axios from 'axios';
+import { axiosInstance } from '../../../config';
 
 
 const tableIcons = {
@@ -73,14 +72,14 @@ const Home = () => {
         }
     ]
     const [data, setData] = useState([]); //table data
-    //   const { data,loading} = useFetch("http://localhost:3002https://employeemanagementjwt.herokuapp.com/admin/allUsers");
+    //   const { data,loading} = useFetch("http://localhost:3002/admin/allUsers");
 
     //for error handling
     const [iserror, setIserror] = useState(false)
     const [errorMessages, setErrorMessages] = useState([])
 
     useEffect(() => {
-        axios.get("https://employeemanagementjwt.herokuapp.com/admin/allUsers")
+        axiosInstance.get("/admin/allUsers")
             .then(res => {
                 console.log(res.data);
                 setData(res.data)
@@ -103,7 +102,7 @@ const Home = () => {
         }
 
         if (errorList.length < 1) {
-            axios.put("https://employeemanagementjwt.herokuapp.com/admin/updateUser/" + oldData._id, newData)
+            axiosInstance.put("/admin/updateUser/" + oldData._id, newData)
                 .then(res => {
                     const dataUpdate = [...data];
                     const index = oldData.tableData.id;
@@ -142,7 +141,7 @@ const Home = () => {
 
 
         if (errorList.length < 1) { //no error
-            axios.post("https://employeemanagementjwt.herokuapp.com//user/signup", newData)
+            axiosInstance.post("/user/signup", newData)
                 .then(res => {
                     let dataToAdd = [...data];
                     dataToAdd.push(newData);
@@ -164,7 +163,7 @@ const Home = () => {
     }
 
     const handleRowDelete = (oldData, resolve) => {
-        axios.delete("https://employeemanagementjwt.herokuapp.com/admin/deletedUser/" + oldData._id)
+        axiosInstance.delete("/admin/deletedUser/" + oldData._id)
             .then(res => {
                 const dataDelete = [...data];
                 const index = oldData.tableData.id;

@@ -15,9 +15,9 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form'
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext'
+import { axiosInstance } from '../../../config';
 
 
 function Copyright(props) {
@@ -44,7 +44,7 @@ const Signup = () => {
     const onSubmit = async (data) => {
         dispatch({ type: "LOGIN_START" });
         try {
-            let res = await axios.post("https://employeemanagementjwt.herokuapp.com/user/signup", data, { withCredentials: true })
+            let res = await axiosInstance.post("/user/signup", data, { withCredentials: true })
             console.log(res.data.details);
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
             if (res.data.err) {
