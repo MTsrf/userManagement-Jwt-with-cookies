@@ -40,7 +40,7 @@ const Login = () => {
     const onSubmit = async (data) => {
         dispatch({ type: "LOGIN_START" });
         try {
-            let res = await axios.post("https://employeemanagementjwt.herokuapp.com//user/login", data,{ withCredentials: true })
+            let res = await axios.post("/user/login", data,{ withCredentials: false })
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
             console.log(res.data);
             if (res.data.created) {
